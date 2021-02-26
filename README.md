@@ -31,15 +31,19 @@ This will download all the requirements for you React-Socketio Frontend Applicat
 ## Run the App
 - Open the App in VSCODE or any other editor
 - Run Commands
+
+npm start - is react local development server 
+npm  watch - loads that static js file for Flask 
+python app.py - starts the flask server 
 ```sh
 npm start
-react local web server
+
 
 python app.py 
-Flask backend server 
+
 
 npm run watch 
-creates static JS file which flask loads to 
+
 ```
 ```sh
 
