@@ -21,6 +21,7 @@ import models
 DB.create_all()
 DB.session.commit()
 
+
 @SOCKETIO.on('connect')
 def on_connect():
     print('Someone connected!')
