@@ -1,6 +1,8 @@
 # app.py
 import os
 import flask
+from os.path import join, dirname
+from dotenv import load_dotenv
 
 import flask_socketio
 import flask_sqlalchemy
@@ -10,8 +12,11 @@ APP = flask.Flask(__name__)
 SOCKETIO = flask_socketio.SocketIO(APP)
 SOCKETIO.init_app(APP, cors_allowed_origins="*")
 
-DATABASE_URI = os.getenv("DATABASE_URL")
-APP.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URI
+dotenv_path = join(dirname(__file__), "pg.env")
+load_dotenv(dotenv_path)
+
+
+APP.config["SQLALCHEMY_DATABASE_URI"] = os.environ["DATABASE_URI"]
 
 DB = flask_sqlalchemy.SQLAlchemy(APP)
 DB.init_app(APP)
