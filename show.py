@@ -29,7 +29,7 @@ class Show:
         ret = ("Title: " + self.title + "\n"
         + "Release Date: " + str(self.release_date) + "\n"
         + "tmdbID: " + str(self.tmdbID) + "\n"
-        + "Cover Photo: " + self.coverPhoto + "\n"
+        + "Cover Photo: " + str(self.coverPhoto) + "\n"
         + "Creators: " + str(self.creators) + "\n"
         + "Description: " + self.description + "\n"
         + "Episode Length: " + str(self.episodeLength) + "\n"

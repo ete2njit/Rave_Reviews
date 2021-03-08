@@ -32,7 +32,7 @@ class Game:
         self.status=status
     
     def toString(self):
-        ret = ("Title: " + self.title + "\n"
+        ret = ("Title: " + str(self.title) + "\n"
         + "Release Year: " + str(self.year) + "\n"
         + "GameID: " + str(self.gameID) + "\n"
         + "Cover Photo: " + str(self.coverPhoto) + "\n"
