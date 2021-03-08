@@ -63,19 +63,21 @@ def getFullGameInfoByID(gameID):
         if field not in json:
             json[field] = None
     print(json)
-    game = Game(json["name"],
-    unixTimeToYear(json["first_release_date"]),
-    json["id"],
-    getGameCover(json["cover"]),
-    json["summary"],
-    getIDNames(json["involved_companies"],"companies"),
-    getIDNames(json["age_ratings"],"age_ratings"),
-    getIDNames(json["genres"],"genres"),
-    getIDNames(json["game_modes"],"game_modes"),
-    getIDNames(json["platforms"],"platforms"),
-    getIDNames(json["player_perspectives"],"player_perspectives"),
-    getIDNames(json["websites"],"websites"),
-    json["status"])
+    game = Game(
+        json["name"],
+        unixTimeToYear(json["first_release_date"]),
+        json["id"],
+        getGameCover(json["cover"]),
+        json["summary"],
+        getIDNames(json["involved_companies"],"companies"),
+        getIDNames(json["age_ratings"],"age_ratings"),
+        getIDNames(json["genres"],"genres"),
+        getIDNames(json["game_modes"],"game_modes"),
+        getIDNames(json["platforms"],"platforms"),
+        getIDNames(json["player_perspectives"],"player_perspectives"),
+        getIDNames(json["websites"],"websites"),
+        json["status"]
+    )
     
     return game
 

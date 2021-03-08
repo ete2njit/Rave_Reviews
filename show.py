@@ -11,7 +11,7 @@ load_dotenv(dotenv_path)
 
 #SHOW CLASS
 class Show:
-    def __init__(self,title,release_date,tmdbID,coverPhoto,description="",creators="",episodeLength="",stillAiring="",genres="",countries="",networks=""):
+    def __init__(self,title,release_date,tmdbID,coverPhoto,description=None,creators=None,episodeLength=None,stillAiring=None,genres=None,countries=None,networks=None):
         self.catergory="tvshow"
         self.title=title
         self.release_date=release_date

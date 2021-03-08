@@ -11,7 +11,7 @@ load_dotenv(dotenv_path)
 
 #MOVIE CLASS
 class Movie:
-    def __init__(self,title,year,imdbID,coverPhoto,description="",directors="",stars="",length="",rated="",genres=""):
+    def __init__(self,title,year,imdbID,coverPhoto,description=None,directors=None,stars=None,length=None,rated=None,genres=None):
         self.catergory="movie"
         self.title=title
         self.year=year
@@ -55,7 +55,7 @@ def getFullMovieInfoByID(imdbID):
         responseDetails["title"],
         responseDetails["year"],
         imdbID,
-        getCoverPhoto(imdbID),
+        getCoverPhoto(responseDetails["title"]),
         responseDetails["description"],
         responseDetails["directors"],
         responseDetails["stars"],
