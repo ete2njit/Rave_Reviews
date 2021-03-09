@@ -65,7 +65,6 @@ def on_search_request(data):
         print(mov.toString())
 
 
-
 @APP.route('/')
 def index():
     return flask.render_template("index.html")
