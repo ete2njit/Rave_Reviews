@@ -4,8 +4,17 @@ import flask
 from os.path import join, dirname
 from dotenv import load_dotenv
 
+import movie
+
 import flask_socketio
 import flask_sqlalchemy
+
+
+# Channel names
+SEARCH_REQUEST_CHANNEL = "search request"
+SEARCH_RESPONSE_CHANNEL = "search response"
+#
+
 
 APP = flask.Flask(__name__)
 
@@ -38,6 +47,23 @@ def on_connect():
 @SOCKETIO.on('disconnect')
 def on_disconnect():
     print('Someone disconnected!')
+
+
+@SOCKETIO.on(SEARCH_REQUEST_CHANNEL)
+def on_search_request(data):
+    if "category" not in data:
+        print("something went wrong")
+        return
+
+    if data["category"] != "movie":
+        print("only movies supported atm")
+        return
+
+    ret = movie.searchMovies(data["searchTerm"])
+
+    for mov in ret:
+        print(mov.toString())
+
 
 
 @APP.route('/')
