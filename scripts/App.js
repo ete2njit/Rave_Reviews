@@ -26,6 +26,14 @@ const App= () =>{
         });
     }, []);
 
+
+    React.useEffect(() => {
+    Socket.on("search response", (data) => {
+        alert(data["title"]);
+        });
+    }, []);
+
+
     return (
         <main>
             <Home/>
