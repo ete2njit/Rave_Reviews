@@ -11,7 +11,7 @@ load_dotenv(dotenv_path)
 
 #MOVIE CLASS
 class Movie:
-    def __init__(self,title,year,imdbID,coverPhoto,description="",directors="",stars="",length="",rated="",genres=""):
+    def __init__(self,title,year,imdbID,coverPhoto,description=None,directors=None,stars=None,length=None,rated=None,genres=None):
         self.catergory="movie"
         self.title=title
         self.year=year
@@ -25,11 +25,11 @@ class Movie:
         self.genres=genres
     
     def toString(self):
-        ret = ("Title: " + self.title + "\n"
+        ret = ("Title: " + str(self.title) + "\n"
         + "Year: " + str(self.year) + "\n"
-        + "ImdbID: " + self.imdbID + "\n"
-        + "Cover Photo: " + self.coverPhoto + "\n"
-        + "Description: " + self.description + "\n"
+        + "ImdbID: " + str(self.imdbID) + "\n"
+        + "Cover Photo: " + str(self.coverPhoto) + "\n"
+        + "Description: " + str(self.description) + "\n"
         + "Stars: " + str(self.stars) + "\n"
         + "Directors: " + str(self.directors) + "\n"
         + "Length: " + str(self.length) + "\n"
@@ -55,7 +55,7 @@ def getFullMovieInfoByID(imdbID):
         responseDetails["title"],
         responseDetails["year"],
         imdbID,
-        getCoverPhoto(imdbID),
+        getCoverPhoto(responseDetails["title"]),
         responseDetails["description"],
         responseDetails["directors"],
         responseDetails["stars"],
@@ -160,7 +160,7 @@ def getMovies(typeOfLookUp="random", limit=10):
         print(count)
     return movies
 
-""" Test  runs  
+"""
 movies = getPopularMovies(3)
 for movie in movies:
     print(movie.toString())
@@ -184,4 +184,7 @@ for movie in movies:
 movies = searchMovies("spongebob", 3)
 for movie in movies:
     print(movie.toString())
+
+movie = movies[0]
+print(getFullMovieInfoByID(movie.imdbID).toString())
 """
