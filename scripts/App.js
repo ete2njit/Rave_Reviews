@@ -2,11 +2,22 @@ import React from "react"
 import Home from "./components/Home"
 import Movies from "./components/Movies"
 import Error from "./components/Error"
+import {Switch , Route} from "react-router-dom"
 
 const App= () =>{
     return (
         <main>
-            <Home/>
+            <Switch>
+       <Route path="/movies">
+          <Movies/>
+        </Route>
+
+        <Route path="/">
+          <Home />
+        </Route>
+
+       </Switch>
+         
         </main>
     )
 }
