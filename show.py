@@ -173,7 +173,7 @@ def getShows(typeOfLookUp="popular", limit=10):
             shows.append(Show(show["name"],show["first_air_date"],show["id"],show["poster_path"]))
             count+=1
     return shows
-
+"""
 populars = getPopularShows()
 for popular in populars:
     print(popular)
@@ -201,3 +201,4 @@ else:
 
 
 print(getFullShowInfoByID(1234435))
+"""
