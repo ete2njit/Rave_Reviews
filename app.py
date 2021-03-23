@@ -44,7 +44,7 @@ def on_connect():
     print('Someone connected!')
     SOCKETIO.emit('connected', {
         'test': 'Connected'
-    })
+    }, room=flask.request.sid)
 
 
 @SOCKETIO.on('disconnect')
@@ -106,6 +106,7 @@ def on_category_request(data):
             "cover": cover,
         }, room=flask.request.sid
     )
+
 
 @APP.route('/')
 def index():
