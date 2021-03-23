@@ -60,10 +60,11 @@ def on_search_request(data):
 
     dcat = data["category"]
     dterm = data["searchTerm"]
+    limit = data["limit"]
 
     print("processing search request: " + dcat + ", " + dterm)
 
-    [category, title, year, ID, cover] = APIwrapper.process_search_request(dcat, dterm)
+    [category, title, year, ID, cover] = APIwrapper.process_search_request(dcat, dterm, limit)
 
     SOCKETIO.emit(
         SEARCH_RESPONSE_CHANNEL,
@@ -83,10 +84,11 @@ def on_search_request(data):
 def on_category_request(data):
     dcat = data["category"]
     dterm = data["searchTerm"]
+    limit = data["limit"]
 
     print("processing search request: " + dcat + ", " + dterm)
 
-    [category, title, year, ID, cover] = APIwrapper.process_search_request(dcat, dterm)
+    [category, title, year, ID, cover] = APIwrapper.process_search_request(dcat, dterm, limit)
 
 
 @APP.route('/')

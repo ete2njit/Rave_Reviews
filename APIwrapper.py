@@ -59,7 +59,7 @@ def process_search_request(dcat, dterm):
         return [category, title, year, ID, cover]
 
 
-def process_category_request(dcat, dtype):
+def process_category_request(dcat, dtype, limit=10):
     """
 
     :param dcat:  category to search (movie, show...)
@@ -77,7 +77,7 @@ def process_category_request(dcat, dtype):
     try:
         if (dcat == "game"):
             if (dtype == "rating"):
-                ret = game.getHighestRatedGames()
+                ret = game.getHighestRatedGames(limit)
                 for g in ret:
                     category.append(g.category)
                     title.append(g.title)
@@ -85,7 +85,7 @@ def process_category_request(dcat, dtype):
                     ID.append(g.gameID)
                     cover.append(g.coverPhoto)
             elif (dtype == "anticipation"):
-                ret = game.getMostAnticipatedGames()
+                ret = game.getMostAnticipatedGames(limit)
                 for g in ret:
                     category.append(g.category)
                     title.append(g.title)
@@ -93,7 +93,7 @@ def process_category_request(dcat, dtype):
                     ID.append(g.gameID)
                     cover.append(g.coverPhoto)
             elif (dtype == "new"):
-                ret = game.getNewlyReleasedGames()
+                ret = game.getNewlyReleasedGames(limit)
                 for g in ret:
                     category.append(g.category)
                     title.append(g.title)
