@@ -3,6 +3,7 @@ import Home from "./components/Home"
 import Socket from "./Socket";
 import Movies from "./components/Movies"
 import Error from "./components/Error"
+import {Switch , Route} from "react-router-dom"
 
 const App= () =>{
 
@@ -29,14 +30,24 @@ const App= () =>{
 
     React.useEffect(() => {
     Socket.on("search response", (data) => {
-        alert(data["title"]);
+        alert(data["category"] + "\n" + data["title"] + "\n" + data["year"] + "\n" + data["ID"]);
+
         });
     }, []);
 
 
     return (
         <main>
-            <Home/>
+            <Switch>
+               <Route path="/movies">
+                  <Movies/>
+                </Route>
+
+                <Route path="/">
+                  <Home />
+                </Route>
+
+           </Switch>
 
             <form htmlFor="newitem" onSubmit={handlePost}>
               <label htmlFor="textbox">
@@ -63,6 +74,9 @@ const App= () =>{
                 Submit
               </button>
             </form>
+
+
+
         </main>
     )
 }
