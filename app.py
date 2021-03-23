@@ -60,7 +60,10 @@ def on_search_request(data):
 
     dcat = data["category"]
     dterm = data["searchTerm"]
-    limit = data["limit"]
+    try:
+        limit = data["limit"]
+    except KeyError:
+        limit = 10
 
     print("processing search request: " + dcat + ", " + dterm)
 
@@ -74,7 +77,7 @@ def on_search_request(data):
             "year": year,
             "ID": ID,
             "cover": cover,
-        },
+        }, room=flask.request.sid
     )
 
     print("finished processing search request")
@@ -84,12 +87,25 @@ def on_search_request(data):
 def on_category_request(data):
     dcat = data["category"]
     dterm = data["searchTerm"]
-    limit = data["limit"]
+    try:
+        limit = data["limit"]
+    except KeyError:
+        limit = 10
 
     print("processing search request: " + dcat + ", " + dterm)
 
     [category, title, year, ID, cover] = APIwrapper.process_search_request(dcat, dterm, limit)
 
+    SOCKETIO.emit(
+        CATEGORY_RESPONSE_CHANNEL,
+        {
+            "category": category,
+            "title": title,
+            "year": year,
+            "ID": ID,
+            "cover": cover,
+        }, room=flask.request.sid
+    )
 
 @APP.route('/')
 def index():

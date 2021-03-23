@@ -4,7 +4,7 @@ import game
 import book
 
 
-def process_search_request(dcat, dterm):
+def process_search_request(dcat, dterm, limit=10):
     """
     :param dcat:    the category being searched (movie, game...)
     :param dtype:   the searchterm(s) (hunger games, harry potter, blue...)
@@ -20,7 +20,7 @@ def process_search_request(dcat, dterm):
 
     try:
         if (dcat == "movie") or (dcat == ""):
-            ret = movie.searchMovies(dterm)
+            ret = movie.searchMovies(dterm, limit)
             for mov in ret:
                 category.append(mov.category)
                 title.append(mov.title)
@@ -29,7 +29,7 @@ def process_search_request(dcat, dterm):
                 cover.append(mov.coverPhoto)
 
         if (dcat == "show") or (dcat == ""):
-            ret = show.searchShows(dterm)
+            ret = show.searchShows(dterm, limit)
             for s in ret:
                 category.append(s.category)
                 title.append(s.title)
@@ -38,7 +38,7 @@ def process_search_request(dcat, dterm):
                 cover.append(s.coverPhoto)
 
         if (dcat == "book") or (dcat == ""):
-            ret = book.searchBooks(dterm)
+            ret = book.searchBooks(dterm, limit)
             for b in ret:
                 category.append(b.category)
                 title.append(b.title)
@@ -47,7 +47,7 @@ def process_search_request(dcat, dterm):
                 cover.append(b.cover)
 
         if (dcat == "game") or (dcat == ""):
-            ret = game.searchGames(dterm)
+            ret = game.searchGames(dterm, limit)
             for g in ret:
                 category.append(g.category)
                 title.append(g.title)
