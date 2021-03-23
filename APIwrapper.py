@@ -7,7 +7,7 @@ import book
 def process_search_request(dcat, dterm, limit=10):
     """
     :param dcat:    the category being searched (movie, game...)
-    :param dtype:   the searchterm(s) (hunger games, harry potter, blue...)
+    :param dterm:   the searchterm(s) (hunger games, harry potter, blue...)
 
     :return:    5 tuple of arrays for categories, titles, years, IDs,
                 and cover image links.
@@ -61,7 +61,6 @@ def process_search_request(dcat, dterm, limit=10):
 
 def process_category_request(dcat, dtype, limit=10):
     """
-
     :param dcat:  category to search (movie, show...)
     :param dtype: top results by type (rating, trending...)
 
@@ -100,6 +99,88 @@ def process_category_request(dcat, dtype, limit=10):
                     year.append(g.year)
                     ID.append(g.gameID)
                     cover.append(g.coverPhoto)
+        elif (dcat == "movie"):
+            if (dtype == "now playing"):
+                ret = movie.getNowPlayingMovies(limit)
+                for mov in ret:
+                    category.append(mov.category)
+                    title.append(mov.title)
+                    year.append(mov.year)
+                    ID.append(mov.imdbID)
+                    cover.append(mov.coverPhoto)
+            elif (dtype == "trending"):
+                ret = movie.getTrendingMovies(limit)
+                for mov in ret:
+                    category.append(mov.category)
+                    title.append(mov.title)
+                    year.append(mov.year)
+                    ID.append(mov.imdbID)
+                    cover.append(mov.coverPhoto)
+            elif (dtype == "rating"):
+                ret = movie.getTopRatedMovies(limit)
+                for mov in ret:
+                    category.append(mov.category)
+                    title.append(mov.title)
+                    year.append(mov.year)
+                    ID.append(mov.imdbID)
+                    cover.append(mov.coverPhoto)
+            elif (dtype == "upcoming"):
+                ret = movie.getUpcomingMovies(limit)
+                for mov in ret:
+                    category.append(mov.category)
+                    title.append(mov.title)
+                    year.append(mov.year)
+                    ID.append(mov.imdbID)
+                    cover.append(mov.coverPhoto)
+            elif (dtype == "popular"):
+                ret = movie.getPopularMovies(limit)
+                for mov in ret:
+                    category.append(mov.category)
+                    title.append(mov.title)
+                    year.append(mov.year)
+                    ID.append(mov.imdbID)
+                    cover.append(mov.coverPhoto)
+        elif (dcat == "book"):
+                ret = book.getBestSellers(dtype)
+                for mov in ret:
+                    category.append(mov.category)
+                    title.append(mov.title)
+                    year.append(mov.year)
+                    ID.append(mov.imdbID)
+                    cover.append(mov.coverPhoto)
+        elif (dcat == "show"):
+            if (dtype == "trending"):
+                ret = show.getTrendingShows(limit=limit)
+                for mov in ret:
+                    category.append(mov.category)
+                    title.append(mov.title)
+                    year.append(mov.year)
+                    ID.append(mov.imdbID)
+                    cover.append(mov.coverPhoto)
+            elif (dtype == "rating"):
+                ret = show.getTopRatedShows(limit)
+                for mov in ret:
+                    category.append(mov.category)
+                    title.append(mov.title)
+                    year.append(mov.year)
+                    ID.append(mov.imdbID)
+                    cover.append(mov.coverPhoto)
+            elif (dtype == "popular"):
+                ret = show.getPopularShows(limit)
+                for mov in ret:
+                    category.append(mov.category)
+                    title.append(mov.title)
+                    year.append(mov.year)
+                    ID.append(mov.imdbID)
+                    cover.append(mov.coverPhoto)
+            elif (dtype == "running"):
+                ret = show.getRunningShows(limit)
+                for mov in ret:
+                    category.append(mov.category)
+                    title.append(mov.title)
+                    year.append(mov.year)
+                    ID.append(mov.imdbID)
+                    cover.append(mov.coverPhoto)
 
     finally:
         return [category, title, year, ID, cover]
