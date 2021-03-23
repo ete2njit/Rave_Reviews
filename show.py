@@ -93,7 +93,7 @@ def searchShows(query, limit=10):
         response = requests.request("GET", url)
         responseJSON = response.json()
         if "results" not in responseJSON.keys() or len(responseJSON["results"]) < 1:
-            return []
+            return shows
         
         for show in responseJSON["results"]:
             if count >= limit:
@@ -117,7 +117,7 @@ def getTrendingShows(timeWindow="week", limit=10): #Time window can be "day" or 
     responseJSON = response.json()
         
     if "results" not in responseJSON.keys() or len(responseJSON["results"]) < 1:
-            return [] 
+            return shows 
         
     for show in responseJSON["results"]:
         if count >= limit:
@@ -158,7 +158,7 @@ def getShows(typeOfLookUp="popular", limit=10):
         responseJSON = response.json()
         
         if "results" not in responseJSON.keys() or len(responseJSON["results"]) < 1:
-            return []        
+            return shows        
             
         for show in responseJSON["results"]:
             if count >= limit:
