@@ -15,6 +15,7 @@ load_dotenv(dotenv_path)
 #BOOK CLASS
 class Book:
     def __init__(self,isbn,title,cover,publishYear,publisher, description,authors,genres,pages,language):
+        self.category="book"
         self.isbn=isbn
         self.title=title
         self.cover=cover
@@ -26,7 +27,7 @@ class Book:
         self.pages=pages
         self.language=language
     
-    def toString(self):
+    def __repr__(self):
         ret = ("ISBN: " + str(self.isbn) + "\n"
         + "Title: " + str(self.title) + "\n"
         + "Cover: " + str(self.cover) + "\n"
@@ -135,6 +136,9 @@ def getBestSellers(category='hardcover-fiction'):
     response = requests.request("GET", url)
     jsonResponse = response.json()
     
+    if "results" not in jsonResponse.keys():
+        return books
+    
     #use isbn from NYT response to search for the best sellers in the google api
     for book in jsonResponse["results"]["books"]:
         googleBook = getBookByISBN(book["primary_isbn13"])
@@ -151,6 +155,10 @@ def getBestSellerCategories():
     url = "https://api.nytimes.com/svc/books/v3/lists/names.json?api-key=" + os.environ['NYT_API_KEY']
     response = requests.request("GET", url)
     jsonResponse = response.json()
+    
+    if "results" not in jsonResponse.keys():
+        return categories    
+    
     for cat in jsonResponse["results"]:
         categories.append(cat["list_name_encoded"])
     return categories    
@@ -173,32 +181,32 @@ def getPublishingYear(publishDate):
         return None
     return publishDate[:4]
 
-"""TEST CODE
+"""
 books = searchBooks("Sunshine",23)
 for book in books:
-    print(book.toString())
+    print(book)
 print("NUMBER:" + str(books.size))
 
 books = getBooksByGenre("Juvenile Fiction")
 for book in books:
-    print(book.toString())
+    print(book)
 
 
 books = getBookByISBN("0545317010")
 for book in books:
-    print(book.toString())
+    print(book)
 
 books = getBooksByAuthor("Mark Twain")
 for book in books:
-    print(book.toString())
+    print(book)
 
 books = getBooksByGenre("Horror")
 for book in books:
-    print(book.toString())
+    print(book)
 
 print(getBestSellerCategories())
 
 bestSellers = getBestSellers("hardcover-nonfiction")
 for bestSeller in bestSellers:
-    print(bestSeller.toString())
+    print(bestSeller)
 """
