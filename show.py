@@ -45,7 +45,7 @@ def getFullShowInfoByID(tmdbID):
     response = requests.request("GET", url)
     responseJSON = response.json()
     
-    if "success" in responseJSON and responseJSON['success'] == False:
+    if "success" in responseJSON.keys() and responseJSON['success'] == False:
         return None
     
     creators = []
@@ -64,6 +64,9 @@ def getFullShowInfoByID(tmdbID):
         responseJSON["poster_path"]=""
     else:
         responseJSON["poster_path"]="https://www.themoviedb.org/t/p/original" + responseJSON["poster_path"]
+    
+    if responseJSON["episode_run_time"] != None or responseJSON["episode_run_time"] != []:
+        responseJSON["episode_run_time"]=responseJSON["episode_run_time"][0]
      
     show = Show(
         responseJSON["name"],
@@ -72,7 +75,7 @@ def getFullShowInfoByID(tmdbID):
         responseJSON["poster_path"],
         responseJSON["overview"],
         creators,
-        responseJSON["episode_run_time"][0],
+        responseJSON["episode_run_time"],
         responseJSON["in_production"],
         genres,
         responseJSON["origin_country"],
@@ -171,7 +174,6 @@ def getShows(typeOfLookUp="popular", limit=10):
             count+=1
     return shows
 
-"""
 populars = getPopularShows()
 for popular in populars:
     print(popular)
@@ -199,4 +201,3 @@ else:
 
 
 print(getFullShowInfoByID(1234435))
-"""
