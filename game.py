@@ -16,7 +16,7 @@ load_dotenv(dotenv_path)
 #GAME CLASS
 class Game:
     def __init__(self,title,year,gameID,coverPhoto,description=None,developers=None,rated=None,genres=None,gameModes=None,platforms=None,perspectives=None,websites=None,status=None):
-        self.catergory="game"
+        self.category="game"
         self.title=title
         self.year=year
         self.gameID=gameID
@@ -31,7 +31,7 @@ class Game:
         self.websites=websites
         self.status=status
     
-    def toString(self):
+    def __repr__(self):
         ret = ("Title: " + str(self.title) + "\n"
         + "Release Year: " + str(self.year) + "\n"
         + "GameID: " + str(self.gameID) + "\n"
@@ -56,13 +56,16 @@ def getFullGameInfoByID(gameID):
                 'fields id,name,cover,first_release_date,summary,age_ratings,game_modes,genres,involved_companies,platforms,player_perspectives,websites,status; offset 0; where id='+str(gameID)+';'
                 )
     
-    json = eval(byte_array)[0]
+    json = eval(byte_array)
+    if len(json) < 1:
+        return None
+    else:
+        json = json[0]
     
     fields = ["id","name","cover","first_release_date","summary","age_ratings","game_modes","genres","involved_companies","platforms","player_perspectives","websites","status"]
     for field in fields:
         if field not in json:
             json[field] = None
-    print(json)
     game = Game(
         json["name"],
         unixTimeToYear(json["first_release_date"]),
@@ -89,6 +92,9 @@ def searchGames(query, limit=10):
                 'search "'+query+'"; fields id,name,first_release_date,cover; limit '+str(limit)+';'
                 )
     searchJSON = eval(search_byte_array)
+    
+    if len(searchJSON) < 1:
+        return []
     
     fields = ["id","name","cover","first_release_date"]
     
@@ -117,6 +123,8 @@ def getGameCover(coverID):
                 'fields image_id, url; where id='+str(coverID)+';'
                 )
     cover_json = eval(cover_byte_array)
+    if len(cover_json) < 1:
+        return None
     return cover_json[0]["url"]
 
 #call api to get values of dataIDs 
@@ -136,7 +144,6 @@ def getIDNames(dataIDs, dataType):
     listID = str(dataIDs)
     listID=listID.replace("[","(")
     listID=listID.replace("]",")")
-    print(listID)
     
     byte_array = wrapper.api_request(
                 dataType,
@@ -262,24 +269,24 @@ def getWrapper():
     return wrapper
 
 
-'''Test code
+"""
 games = searchGames("batman")
 for game in games:
-    print(game.toString())
+    print(game)
 
 fullDetailGame = games[0]
 fullDetail = getFullGameInfoByID(fullDetailGame.gameID)
-print(fullDetail.toString())
+print(fullDetail)
 
 games = getHighestRatedGames()
 for game in games:
-    print(game.toString())
+    print(game)
 
 games = getMostAnticipatedGames()
 for game in games:
-    print(game.toString())
+    print(game)
 
 games = getNewlyReleasedGames()
 for game in games:
-    print(game.toString())
-'''
+    print(game)
+"""
