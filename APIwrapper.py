@@ -25,7 +25,7 @@ def process_search_request(dcat, dterm, limit=10):
                 category.append(mov.category)
                 title.append(mov.title)
                 year.append(mov.year)
-                ID.append(mov.imdbID)
+                ID.append(mov.tmdbID)
                 cover.append(mov.coverPhoto)
 
         if (dcat == "show") or (dcat == ""):
