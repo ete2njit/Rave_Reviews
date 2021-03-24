@@ -20,8 +20,11 @@ const Home = () => {
     if (event.key === 'Enter') {
       console.log('do validate')
 
-      if ( searchCategory != "Category" && setSearchTerm != ""){
-        e.preventDefault();
+      if ( searchCategory != "Category" && searchTerm != ""){
+        event.preventDefault();
+      
+        console.log("serach term")
+        console.log(searchTerm)
 
         Socket.emit("search request", {
             category: searchCategory,
@@ -45,7 +48,9 @@ const Home = () => {
 
     React.useEffect(() => {
       Socket.on("search response", (data) => {
+          
           alert(data["category"] + "\n" + data["title"] + "\n" + data["year"] + "\n" + data["ID"]);
+          
           setSearchData(data)
   
           });
@@ -57,7 +62,7 @@ const Home = () => {
       <Form>
       <Form.Row>
       <Col md ={10}>
-      <Form.Control placeholder="Title" onKeyDown = {handleKeyDown}
+      <Form.Control placeholder="Title" onKeyDown = {handleKeyDown} onChange = {(e) => setSearchTerm(e.target.value)}
       />
       </Col>
       <Col>
@@ -69,13 +74,13 @@ const Home = () => {
       </DropdownButton>
       </Col>
       <Col>
-      
       </Col>
-     
      
   </Form.Row>
       </Form>
-      
+      {Object.keys(searchData).length !== 0 ?
+      <Catalog data ={searchData}/>:null
+    }
     </div>
   ); 
   }

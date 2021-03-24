@@ -10,10 +10,9 @@ const Catalog= (props) =>{
     return (
        <div>
          <h1>{props.title} </h1>  
-         { products.map((product, index) =>
-    
-    <li key={index}>
-      <Product description ={product.description} creators ={product.creators}/>
+         { props.data["ID"].map((id, index) =>
+    <li key={id}>
+      <Product  name = {props.data["title"][index]} img = {props.data["cover"][index]}/>
     </li>
   )}
        </div>
