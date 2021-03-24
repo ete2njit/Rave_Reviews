@@ -10,15 +10,17 @@ import Col from 'react-bootstrap/Col'
 import Socket from "../Socket";
 import Catalog from "./Catalog"
 
+
 const Home = () => {
   const [searchTerm, setSearchTerm] = React.useState("");
   const [searchCategory, setSearchCategory] = React.useState("Category");
+  const [searchData , setSearchData] = React.useState({})
   
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       console.log('do validate')
 
-      if ( searchCategory != "Category"){
+      if ( searchCategory != "Category" && setSearchTerm != ""){
         e.preventDefault();
 
         Socket.emit("search request", {
@@ -26,11 +28,28 @@ const Home = () => {
             searchTerm: searchTerm,
         }); 
       }
-      else{
+      else if (searchCategory == "Category"){
         alert("Please enter category ")
+      }
+      else{
+        alert("Please enter title")
       }
     }
   }
+
+  React.useEffect(() => {
+    Socket.on("connected", (data) => {
+        alert(data["test"]);
+        });
+    }, []);
+
+    React.useEffect(() => {
+      Socket.on("search response", (data) => {
+          alert(data["category"] + "\n" + data["title"] + "\n" + data["year"] + "\n" + data["ID"]);
+          setSearchData(data)
+  
+          });
+      }, []);
  
   return (
     <div>
