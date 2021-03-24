@@ -5,8 +5,6 @@ import Product from './Product'
 
 const Catalog= (props) =>{
     // sample products 
-    const products = [{name:"starWars",creators :" lucas films" ,description :"jfdfjask"},{name:"starWars",creators :" lucas films" ,description :"jfdfjask"},{name:"starWars",creators :" lucas films" ,description :"jfdfjask"}]
-   
     return (
        <div>
          <h1>{props.title} </h1>  

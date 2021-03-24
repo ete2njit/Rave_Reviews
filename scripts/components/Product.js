@@ -10,55 +10,37 @@ import Card from 'react-bootstrap/Card'
 const Product = (props) => {
     return (
         <div>
-
             <Container fluid >
                 <Row>
                     <Col>
-
-                        <Card style={{ width: '28rem' }}>
+                       <Card style={{ width: '25rem' }}>
                             <Card.Img variant="top" src={props.img} />
                             <Card.Body>
-                                <Card.Title>Product </Card.Title>
+                                <Card.Title>Title </Card.Title>
                                 <Card.Text>
                                     {props.name}
                             </Card.Text>
-
-                            </Card.Body>
-                        </Card>
-
-                    </Col>
-
-                    <Col>
-                        <Card style={{ width: '38rem' }}>
-                            <Card.Body>
-                                <Card.Title>Content Creators </Card.Title>
-                                <Card.Text>
+                            <Card.Text>
                                    {props.creators}
+                                </Card.Text>
+                                <Card.Text>
+                                Description 
+                                {props.description}
+                                </Card.Text>
+                            
+                                <Card.Text>
+                                   Reviews
+                                    {props.reviews}
                                 </Card.Text>
                             </Card.Body>
                         </Card>
                     </Col>
+
                 </Row>
                 <Row>
-                    <Col>
-                        <Jumbotron>
-                            <h1>Description</h1>
-                            <p>
-                                {props.description}
-                                </p>
-
-                        </Jumbotron>
-                    </Col>
+                   
                 </Row>
 
-                <Row>
-                    <Col>
-                        <Card>
-                            <h1> Reviews </h1>
-                            <Card.Body>{props.reviews}</Card.Body>
-                        </Card>
-                    </Col>
-                </Row>
             </Container>
 
         </div>
