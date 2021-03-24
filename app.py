@@ -150,7 +150,7 @@ def index():
 if __name__ == '__main__':
     SOCKETIO.run(
         APP,
-        host=os.getenv('IP', 'localhost'),
+        host=os.getenv('IP', '0.0.0.0'),
         port=int(os.getenv('PORT', 8080)),
         debug=True
     )
