@@ -184,3 +184,44 @@ def process_category_request(dcat, dtype, limit=10):
 
     finally:
         return [category, title, year, ID, cover]
+
+
+def get_info_by_ID(dcat, dID):
+    """
+    :param dcat:    book, game, movie or show
+    :param dID:     isbn, tmdb or game ID to be looked up
+    :return:        if successful, 16 tuple dict with the following keys:
+
+        [category, title, year, ID,
+        cover, description, creators, rated,
+        genres, accessibility, perspectives,
+        websites, status, duration, stars]
+
+        else:
+        {"category": "error"}
+    """
+    if (dcat == "game"):
+        ret = game.getFullGameInfoByID(gameID=dID)
+        return {"category": ret.category, "title": ret.title, "year": ret.year, "ID": ret.gameID,
+                "cover": ret.coverPhoto, "description": ret.description, "creators": ret.developers, "rated": ret.rated,
+                "genres": ret.genres + ret.gameModes, "accessibility": ret.platforms, "perspectives": ret.perspectives,
+                "websites": ret.websites, "status": ret.status, "duration": None, "stars": None}
+    if (dcat == "movie"):
+        ret = movie.getFullMovieInfoByID(tmdbID=dID)
+        return {"category": ret.category, "title": ret.title, "year": ret.year, "ID": ret.tmdbID,
+                "cover": ret.coverPhoto, "description": ret.description, "creators": ret.directors, "rating": None,
+                "genres": ret.genres, "accessibility": None, "perspectives": None,
+                "websites": None, "status": None, "duration": ret.duration, "stars": ret.stars}
+    if (dcat == "book"):
+        ret = book.getBookByISBN(isbn=dID)
+        return {"category": ret.category, "title": ret.title, "year": ret.publishYear, "ID": ret.isbn,
+                "cover": ret.cover, "description": ret.description, "creators": ret.authors, "rating": None,
+                "genres": ret.genres, "accessibility": ret.languages, "perspectives": None,
+                "websites": None, "status": None, "duration": ret.pages, "stars": None}
+    if (dcat == "show"):
+        ret = show.getFullShowInfoByID(tmdbID=dID)
+        return {"category": ret.category, "title": ret.title, "year": ret.release_date[:4], "ID": ret.tmdbID,
+                "cover": ret.coverPhoto, "description": ret.description, "creators": ret.creators, "rating": None,
+                "genres": ret.genres, "accessibility": ret.networks, "perspectives": None,
+                "websites": None, "status": ret.stillAiring, "duration": ret.episodeLength, "stars": None}
+    return {"category": "error"}

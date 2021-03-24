@@ -16,6 +16,8 @@ SEARCH_REQUEST_CHANNEL = "search request"
 SEARCH_RESPONSE_CHANNEL = "search response"
 CATEGORY_REQUEST_CHANNEL = "category request"
 CATEGORY_RESPONSE_CHANNEL = "category response"
+INFO_BY_ID_REQUEST_CHANNEL = "info by id request"
+INFO_BY_ID_RESPONSE_CHANNEL = "info by id response"
 #
 
 
@@ -106,6 +108,38 @@ def on_category_request(data):
             "cover": cover,
         }, room=flask.request.sid
     )
+
+
+@SOCKETIO.on(INFO_BY_ID_REQUEST_CHANNEL)
+def on_id_request(data):
+    dcat = data["category"]
+    dID = data["ID"]
+
+
+    ret = APIwrapper.get_info_by_ID(dcat, dID)
+
+    SOCKETIO.emit(
+        INFO_BY_ID_RESPONSE_CHANNEL,
+        {
+            "category": ret["category"],
+            "title": ret["title"],
+            "year": ret["year"],
+            "ID": ret["ID"],
+            "cover": ret["cover"],
+            "description": ret["description"],
+            "creators": ret["creators"],
+            "rated": ret["rated"],
+            "genres": ret["genres"],
+            "accessibility": ret["accessibility"],
+            "perspectives": ret["perspectives"],
+            "websites": ret["websites"],
+            "status": ret["status"],
+            "duration": ret["duration"],
+            "stars": ret["stars"],
+        }, room=flask.request.sid
+    )
+
+
 
 
 @APP.route('/')
