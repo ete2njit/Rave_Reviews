@@ -111,13 +111,13 @@ def process_category_request(dcat, dtype, limit=10):
                 cover.append(mov.coverPhoto)
 
         elif (dcat == "book"):
-                ret = book.getBestSellers(dtype)
-                for b in ret:
-                    category.append(b.category)
-                    title.append(b.title)
-                    year.append(b.publishYear)
-                    ID.append(b.isbn)
-                    cover.append(b.cover)
+            ret = book.getBestSellers(dtype)
+            for b in ret:
+                category.append(b.category)
+                title.append(b.title)
+                year.append(b.publishYear)
+                ID.append(b.isbn)
+                cover.append(b.cover)
 
         elif (dcat == "show"):
             if (dtype == "trending"):
