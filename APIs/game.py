@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 from igdb.wrapper import IGDBWrapper
 from igdb.igdbapi_pb2 import GameResult
 
-dotenv_path = join(dirname(__file__), "api-keys.env")
+dotenv_path = join(dirname(__file__), "../api-keys.env")
 load_dotenv(dotenv_path)
 
 #GAME CLASS
@@ -30,7 +30,7 @@ class Game:
         self.perspectives=perspectives
         self.websites=websites
         self.status=status
-    
+
     def __repr__(self):
         ret = ("Title: " + str(self.title) + "\n"
         + "Release Year: " + str(self.year) + "\n"
@@ -55,13 +55,13 @@ def getFullGameInfoByID(gameID):
                 'games',
                 'fields id,name,cover,first_release_date,summary,age_ratings,game_modes,genres,involved_companies,platforms,player_perspectives,websites,status; offset 0; where id='+str(gameID)+';'
                 )
-    
+
     json = eval(byte_array)
     if len(json) < 1:
         return None
     else:
         json = json[0]
-    
+
     fields = ["id","name","cover","first_release_date","summary","age_ratings","game_modes","genres","involved_companies","platforms","player_perspectives","websites","status"]
     for field in fields:
         if field not in json:
@@ -81,7 +81,7 @@ def getFullGameInfoByID(gameID):
         getIDNames(json["websites"],"websites"),
         json["status"]
     )
-    
+
     return game
 
 #search for a game title using a query
@@ -92,31 +92,31 @@ def searchGames(query, limit=10):
                 'search "'+query+'"; fields id,name,first_release_date,cover; limit '+str(limit)+';'
                 )
     searchJSON = eval(search_byte_array)
-    
+
     if len(searchJSON) < 1:
         return []
-    
+
     fields = ["id","name","cover","first_release_date"]
-    
+
     games = []
     for gameJSON in searchJSON:
         for field in fields:
             if field not in gameJSON:
                 gameJSON[field] = None
-        
+
         game = Game(gameJSON["name"],
         unixTimeToYear(gameJSON["first_release_date"]),
         gameJSON["id"],
         getGameCover(gameJSON["cover"]))
         games.append(game)
-    
+
     return games
 
 #call api to get url to cover photo with coverID
 def getGameCover(coverID):
     if coverID == None:
-        return None    
-    
+        return None
+
     wrapper= getWrapper()
     cover_byte_array = wrapper.api_request(
                 'covers',
@@ -127,24 +127,24 @@ def getGameCover(coverID):
         return None
     return cover_json[0]["url"]
 
-#call api to get values of dataIDs 
+#call api to get values of dataIDs
 def getIDNames(dataIDs, dataType):
     if dataIDs == None:
         return None
-    
+
     if dataType == "age_ratings":
         field = "rating"
     elif dataType == "websites":
-        field = "url"    
+        field = "url"
     else:
         field = "name"
-    
+
     wrapper= getWrapper()
-    
+
     listID = str(dataIDs)
     listID=listID.replace("[","(")
     listID=listID.replace("]",")")
-    
+
     byte_array = wrapper.api_request(
                 dataType,
                 'fields '+field+'; where id = '+listID+';'
@@ -158,10 +158,10 @@ def getIDNames(dataIDs, dataType):
                 dataNames.append(getRatingFromID(response[field]))
             else:
                 dataNames.append(response[field])
-                
+
     if dataNames == []:
         return None
-    
+
     return dataNames
 
 #get string ratings from a ratingID
@@ -190,21 +190,21 @@ def getHighestRatedGames(limit=10):
                 'fields id,name,first_release_date,cover, rating; sort rating desc; where rating != null & rating_count > 500; limit '+str(limit)+';'
                 )
     gamesJSON = eval(games_byte_array)
-    
+
     fields = ["id","name","cover","first_release_date"]
-    
+
     games = []
     for gameJSON in gamesJSON:
         for field in fields:
             if field not in gameJSON:
                 gameJSON[field] = None
-        
+
         game = Game(gameJSON["name"],
         unixTimeToYear(gameJSON["first_release_date"]),
         gameJSON["id"],
         getGameCover(gameJSON["cover"]))
         games.append(game)
-    
+
     return games
 
 #get most anticipated games that have not been released
@@ -215,21 +215,21 @@ def getMostAnticipatedGames(limit=10):
                 'fields id,name,first_release_date,cover, hypes; sort hypes desc; where hypes != null & first_release_date = null; limit '+str(limit)+';'
                 )
     gamesJSON = eval(games_byte_array)
-    
+
     fields = ["id","name","cover","first_release_date"]
-    
+
     games = []
     for gameJSON in gamesJSON:
         for field in fields:
             if field not in gameJSON:
                 gameJSON[field] = None
-        
+
         game = Game(gameJSON["name"],
         None,
         gameJSON["id"],
         getGameCover(gameJSON["cover"]))
         games.append(game)
-    
+
     return games
 
 #get games that were recently released - filtered for games that had an amount of hype
@@ -240,21 +240,21 @@ def getNewlyReleasedGames(limit=10):
                 'fields id,name,first_release_date,cover; sort first_release_date desc; where hypes > 25 & first_release_date != null; limit '+str(limit)+';'
                 )
     gamesJSON = eval(games_byte_array)
-    
+
     fields = ["id","name","cover","first_release_date"]
-    
+
     games = []
     for gameJSON in gamesJSON:
         for field in fields:
             if field not in gameJSON:
                 gameJSON[field] = None
-        
+
         game = Game(gameJSON["name"],
         unixTimeToYear(gameJSON["first_release_date"]),
         gameJSON["id"],
         getGameCover(gameJSON["cover"]))
         games.append(game)
-    
+
     return games
 
 #convert unix time to year

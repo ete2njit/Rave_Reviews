@@ -1,7 +1,7 @@
-import movie
-import show
-import game
-import book
+from APIs import movie
+from APIs import show
+from APIs import game
+from APIs import book
 
 
 def process_search_request(dcat, dterm, limit=10):

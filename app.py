@@ -4,7 +4,7 @@ import os
 from os.path import join, dirname
 from dotenv import load_dotenv
 
-import APIwrapper
+from APIs import APIwrapper
 
 import flask
 import flask_socketio
@@ -35,7 +35,6 @@ APP.config["SQLALCHEMY_DATABASE_URI"] = os.environ["DATABASE_URI"]
 DB = flask_sqlalchemy.SQLAlchemy(APP)
 DB.init_app(APP)
 DB.app = APP
-import models
 
 DB.create_all()
 DB.session.commit()

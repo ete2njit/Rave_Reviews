@@ -6,7 +6,7 @@ import os
 from os.path import join, dirname
 from dotenv import load_dotenv
 
-dotenv_path = join(dirname(__file__), "api-keys.env")
+dotenv_path = join(dirname(__file__), "../api-keys.env")
 load_dotenv(dotenv_path)
 
 #SHOW CLASS
@@ -24,7 +24,7 @@ class Show:
         self.genres=genres
         self.countries=countries
         self.networks=networks
-    
+
     def __repr__(self):
         ret = ("Title: " + str(self.title) + "\n"
         + "Release Date: " + str(self.release_date) + "\n"
@@ -44,30 +44,30 @@ def getFullShowInfoByID(tmdbID):
     url = "https://api.themoviedb.org/3/tv/"+str(tmdbID)+"?api_key="+os.environ['TMDB_API_KEY']
     response = requests.request("GET", url)
     responseJSON = response.json()
-    
+
     if "success" in responseJSON.keys() and responseJSON['success'] == False:
         return None
-    
+
     creators = []
     for creator in responseJSON["created_by"]:
         creators.append(creator["name"])
-    
+
     genres = []
     for genre in responseJSON["genres"]:
         genres.append(genre["name"])
-    
+
     networks = []
     for network in responseJSON["networks"]:
         networks.append(network["name"])
-     
+
     if responseJSON["poster_path"]==None:
         responseJSON["poster_path"]=""
     else:
         responseJSON["poster_path"]="https://www.themoviedb.org/t/p/original" + responseJSON["poster_path"]
-    
+
     if responseJSON["episode_run_time"] != None or responseJSON["episode_run_time"] != []:
         responseJSON["episode_run_time"]=responseJSON["episode_run_time"][0]
-     
+
     show = Show(
         responseJSON["name"],
         responseJSON["first_air_date"],
@@ -81,7 +81,7 @@ def getFullShowInfoByID(tmdbID):
         responseJSON["origin_country"],
         networks
     )
-    
+
     return show
 
 #Search for a shows using keywords in the title
@@ -89,7 +89,7 @@ def searchShows(query, limit=10):
     page = 0
     count=0
     shows=[]
-    
+
     while limit > count:
         page+=1
         url = "https://api.themoviedb.org/3/search/tv?api_key="+os.environ['TMDB_API_KEY']+"&query="+query+"&page="+str(page)+"&include_adult=false"
@@ -97,7 +97,7 @@ def searchShows(query, limit=10):
         responseJSON = response.json()
         if "results" not in responseJSON.keys() or len(responseJSON["results"]) < 1:
             return shows
-        
+
         for show in responseJSON["results"]:
             if count >= limit:
                 return shows
@@ -114,14 +114,14 @@ def getTrendingShows(timeWindow="week", limit=10): #Time window can be "day" or 
     page = 0
     count=0
     shows=[]
-    
+
     url = "https://api.themoviedb.org/3/trending/tv/week?api_key="+os.environ['TMDB_API_KEY']
     response = requests.request("GET", url)
     responseJSON = response.json()
-        
+
     if "results" not in responseJSON.keys() or len(responseJSON["results"]) < 1:
-            return shows 
-        
+            return shows
+
     for show in responseJSON["results"]:
         if count >= limit:
             return shows
@@ -136,33 +136,33 @@ def getTrendingShows(timeWindow="week", limit=10): #Time window can be "day" or 
 #Get list of top rated shows
 def getTopRatedShows(limit=10):
     movies = getShows("top_rated", limit)
-    return movies  
+    return movies
 
 #Get list of popular shows
 def getPopularShows(limit=10):
     movies = getShows("popular", limit)
-    return movies 
+    return movies
 
 #Get list of shows that have aired in the past 7 days
 def getRunningShows(limit=10):
     movies = getShows("on_the_air", limit)
-    return movies 
+    return movies
 
 #Used to run all the categorical calls above, if no type is given it will pick popular shows
 def getShows(typeOfLookUp="popular", limit=10):
     page = 0
     count=0
     shows=[]
-    
+
     while limit > count:
         page+=1
         url = "https://api.themoviedb.org/3/tv/"+typeOfLookUp+"?api_key="+os.environ['TMDB_API_KEY']+"&page="+str(page)
         response = requests.request("GET", url)
         responseJSON = response.json()
-        
+
         if "results" not in responseJSON.keys() or len(responseJSON["results"]) < 1:
-            return shows        
-            
+            return shows
+
         for show in responseJSON["results"]:
             if count >= limit:
                 return shows

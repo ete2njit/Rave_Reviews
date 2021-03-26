@@ -9,7 +9,7 @@ from os.path import join, dirname
 from dotenv import load_dotenv
 import numpy as np
 
-dotenv_path = join(dirname(__file__), "api-keys.env")
+dotenv_path = join(dirname(__file__), "../api-keys.env")
 load_dotenv(dotenv_path)
 
 #BOOK CLASS
@@ -26,7 +26,7 @@ class Book:
         self.genres=genres
         self.pages=pages
         self.language=language
-    
+
     def __repr__(self):
         ret = ("ISBN: " + str(self.isbn) + "\n"
         + "Title: " + str(self.title) + "\n"
@@ -72,7 +72,7 @@ def getBooksByGenre(genre, limit=10):
         books=np.append(books, parseBookData(response))
         limit-=maxResults
         startIndex+=(maxResults+1)
-    return books    
+    return books
 
 #search for books from google book api given an author name
 def getBooksByAuthor(author, limit=10):
@@ -104,12 +104,12 @@ def parseBookData(response):
         return []
     for item in responseDetails["items"]:
         volume = item["volumeInfo"]
- 
+
         #check to see if fields exist as keys, if they dont set them to None
         for field in fields:
             if field not in volume.keys():
                 volume[field]=None
-            
+
         book = Book(
             getISBN(volume["industryIdentifiers"]),
             volume["title"],
@@ -122,23 +122,23 @@ def parseBookData(response):
             volume["pageCount"],
             volume["language"]
         )
-        
+
         books.append(book)
-    
+
     return books
 
 #gets best sellers given a best seller category
 def getBestSellers(category='hardcover-fiction'):
     books=[]
-    
+
     #use NYT api to get best sellers
     url = "https://api.nytimes.com/svc/books/v3/lists/current/"+category+".json?api-key=" + os.environ['NYT_API_KEY']
     response = requests.request("GET", url)
     jsonResponse = response.json()
-    
+
     if "results" not in jsonResponse.keys():
         return books
-    
+
     #use isbn from NYT response to search for the best sellers in the google api
     for book in jsonResponse["results"]["books"]:
         googleBook = getBookByISBN(book["primary_isbn13"])
@@ -146,7 +146,7 @@ def getBestSellers(category='hardcover-fiction'):
             googleBook = getBookByISBN(book["primary_isbn10"])
         if  googleBook != []:
             books.append(googleBook[0])
-        
+
     return books
 
 #gets list of the useable best seller categories
@@ -155,13 +155,13 @@ def getBestSellerCategories():
     url = "https://api.nytimes.com/svc/books/v3/lists/names.json?api-key=" + os.environ['NYT_API_KEY']
     response = requests.request("GET", url)
     jsonResponse = response.json()
-    
+
     if "results" not in jsonResponse.keys():
-        return categories    
-    
+        return categories
+
     for cat in jsonResponse["results"]:
         categories.append(cat["list_name_encoded"])
-    return categories    
+    return categories
 
 #used to parse ISBN, and catch if one is not available
 def getISBN(identifiers):
