@@ -76,111 +76,66 @@ def process_category_request(dcat, dtype, limit=10):
     try:
         if (dcat == "game"):
             if (dtype == "rating"):
-                ret = game.getHighestRatedGames(limit)
-                for g in ret:
-                    category.append(g.category)
-                    title.append(g.title)
-                    year.append(g.year)
-                    ID.append(g.gameID)
-                    cover.append(g.coverPhoto)
+                ret = game.getHighestRatedGames(limit=limit)
             elif (dtype == "anticipation"):
-                ret = game.getMostAnticipatedGames(limit)
-                for g in ret:
-                    category.append(g.category)
-                    title.append(g.title)
-                    year.append(g.year)
-                    ID.append(g.gameID)
-                    cover.append(g.coverPhoto)
+                ret = game.getMostAnticipatedGames(limit=limit)
             elif (dtype == "new"):
-                ret = game.getNewlyReleasedGames(limit)
-                for g in ret:
-                    category.append(g.category)
-                    title.append(g.title)
-                    year.append(g.year)
-                    ID.append(g.gameID)
-                    cover.append(g.coverPhoto)
+                ret = game.getNewlyReleasedGames(limit=limit)
+            else:
+                return None
+            for g in ret:
+                category.append(g.category)
+                title.append(g.title)
+                year.append(g.year)
+                ID.append(g.gameID)
+                cover.append(g.coverPhoto)
+
         elif (dcat == "movie"):
             if (dtype == "now playing"):
-                ret = movie.getNowPlayingMovies(limit)
-                for mov in ret:
-                    category.append(mov.category)
-                    title.append(mov.title)
-                    year.append(mov.year)
-                    ID.append(mov.tmdbID)
-                    cover.append(mov.coverPhoto)
+                ret = movie.getNowPlayingMovies(limit=limit)
             elif (dtype == "trending"):
-                ret = movie.getTrendingMovies(limit)
-                for mov in ret:
-                    category.append(mov.category)
-                    title.append(mov.title)
-                    year.append(mov.year)
-                    ID.append(mov.tmdbID)
-                    cover.append(mov.coverPhoto)
+                ret = movie.getTrendingMovies(limit=limit)
             elif (dtype == "rating"):
-                ret = movie.getTopRatedMovies(limit)
-                for mov in ret:
-                    category.append(mov.category)
-                    title.append(mov.title)
-                    year.append(mov.year)
-                    ID.append(mov.tmdbID)
-                    cover.append(mov.coverPhoto)
+                ret = movie.getTopRatedMovies(limit=limit)
             elif (dtype == "upcoming"):
-                ret = movie.getUpcomingMovies(limit)
-                for mov in ret:
-                    category.append(mov.category)
-                    title.append(mov.title)
-                    year.append(mov.year)
-                    ID.append(mov.tmdbID)
-                    cover.append(mov.coverPhoto)
+                ret = movie.getUpcomingMovies(limit=limit)
             elif (dtype == "popular"):
-                ret = movie.getPopularMovies(limit)
-                for mov in ret:
-                    category.append(mov.category)
-                    title.append(mov.title)
-                    year.append(mov.year)
-                    ID.append(mov.tmdbID)
-                    cover.append(mov.coverPhoto)
+                ret = movie.getPopularMovies(limit=limit)
+            else:
+                return None
+            for mov in ret:
+                category.append(mov.category)
+                title.append(mov.title)
+                year.append(mov.year)
+                ID.append(mov.tmdbID)
+                cover.append(mov.coverPhoto)
+
         elif (dcat == "book"):
-                ret = book.getBestSellers(dtype)
-                for b in ret:
-                    category.append(b.category)
-                    title.append(b.title)
-                    year.append(b.publishYear)
-                    ID.append(b.isbn)
-                    cover.append(b.cover)
+            ret = book.getBestSellers(dtype)
+            for b in ret:
+                category.append(b.category)
+                title.append(b.title)
+                year.append(b.publishYear)
+                ID.append(b.isbn)
+                cover.append(b.cover)
+
         elif (dcat == "show"):
             if (dtype == "trending"):
                 ret = show.getTrendingShows(limit=limit)
-                for s in ret:
-                    category.append(s.category)
-                    title.append(s.title)
-                    year.append(s.release_date[:4])
-                    ID.append(s.tmdbID)
-                    cover.append(s.coverPhoto)
             elif (dtype == "rating"):
-                ret = show.getTopRatedShows(limit)
-                for s in ret:
-                    category.append(s.category)
-                    title.append(s.title)
-                    year.append(s.release_date[:4])
-                    ID.append(s.tmdbID)
-                    cover.append(s.coverPhoto)
+                ret = show.getTopRatedShows(limit=limit)
             elif (dtype == "popular"):
-                ret = show.getPopularShows(limit)
-                for s in ret:
-                    category.append(s.category)
-                    title.append(s.title)
-                    year.append(s.release_date[:4])
-                    ID.append(s.tmdbID)
-                    cover.append(s.coverPhoto)
+                ret = show.getPopularShows(limit=limit)
             elif (dtype == "running"):
-                ret = show.getRunningShows(limit)
-                for s in ret:
-                    category.append(s.category)
-                    title.append(s.title)
-                    year.append(s.release_date[:4])
-                    ID.append(s.tmdbID)
-                    cover.append(s.coverPhoto)
+                ret = show.getRunningShows(limit=limit)
+            else:
+                return None
+            for s in ret:
+                category.append(s.category)
+                title.append(s.title)
+                year.append(s.release_date[:4])
+                ID.append(s.tmdbID)
+                cover.append(s.coverPhoto)
 
     finally:
         return [category, title, year, ID, cover]
