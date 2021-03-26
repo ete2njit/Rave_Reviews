@@ -59,7 +59,11 @@ module.exports = {
                                 esmodules: false
                               }
                             }
-                        ]
+                           
+                        ],
+                        {
+                          'plugins': ['@babel/plugin-proposal-class-properties']
+                        }
                     ]
                 }
             }
