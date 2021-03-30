@@ -139,6 +139,7 @@ def on_id_request(data):
     )
 
 
+@SOCKETIO.on()
 
 
 @APP.route('/')
