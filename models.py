@@ -1,54 +1,34 @@
 # models.py
-import flask_sqlalchemy
+
 from app import DB
 
 
 class Page(DB.Model):
-    Title = DB.Column(DB.String(256), primary_key=True)
-    Subtitle = DB.Column(DB.String(256), primary_key=True)
-    Type = DB.Column(DB.String(256), primary_key=True)
+    PageID = DB.Column(DB.String(256), primary_key=True)
 
-    ReleaseDate = DB.Column(DB.DateTime())
-    PageID = DB.Column(DB.Integer, autoincrement=True)
+    Title = DB.Column(DB.String(256))
+    Subtitle = DB.Column(DB.String(256))
+    Type = DB.Column(DB.String(256))
+    Year = DB.Column(DB.Integer())
 
-    def __init__(self, Title, Subtitle, Type, ReleaseDate=None):
+    def __init__(self, PageID, Title, Subtitle, Type, Year):
+        self.PageID = PageID
         self.Title = Title
         self.Subtitle = Subtitle
         self.Type = Type
-        self.ReleaseDate = ReleaseDate
+        self.Year = Year
 
 
 class PageGenre(DB.Model):
-    PageID = DB.Column(DB.Integer, primary_key=True, autoincrement=False)
-    Genre = DB.Column(DB.String(256), primary_key=True)
+    id = DB.Column(DB.Integer, primary_key=True)
+    PageID = DB.Column(DB.String(256), DB.ForeignKey("page.PageID"))
+    Genre = DB.Column(DB.String(256))
+
+    DB.relationship(Page, backref=DB.backref("genres"))
 
     def __init__(self, PageID, Genre):
         self.PageID = PageID
         self.Genre = Genre
-
-
-class Review(DB.Model):
-    PageID = DB.Column(DB.Integer, primary_key=True, autoincrement=False)
-    UserID = DB.Column(DB.String(256), primary_key=True)
-
-    Rating = DB.Column(DB.Float, nullable=False)
-    ReviewText = DB.Column(DB.String(8192), nullable=False)
-    ReviewID = DB.Column(DB.Integer, autoincrement=True)
-
-    def __init__(self, PageID, UserID, Rating, ReviewText):
-        self.PageID = PageID
-        self.UserID = UserID
-        self.Rating = Rating
-        self.ReviewText = ReviewText
-
-
-class Like(DB.Model):
-    ReviewID = DB.Column(DB.Integer, primary_key=True, autoincrement=False)
-    UserID = DB.Column(DB.String(256), primary_key=True)
-
-    def __init__(self, ReviewID, UserID):
-        self.ReviewID = ReviewID
-        self.UserID = UserID
 
 
 class User(DB.Model):
@@ -61,3 +41,39 @@ class User(DB.Model):
         self.UserID = UserID
         self.Username = Username
         self.Userpfp = Userpfp
+
+
+class Review(DB.Model):
+    ReviewID = DB.Column(DB.Integer, primary_key=True)
+
+    PageID = DB.Column(DB.String(256), DB.ForeignKey("page.PageID"))
+    UserID = DB.Column(DB.String(256), DB.ForeignKey("user.UserID"))
+
+    Rating = DB.Column(DB.Float, nullable=False)
+    ReviewText = DB.Column(DB.String(8192), nullable=False)
+
+    DB.relationship(Page, backref=DB.backref("reviews"))
+    DB.relationship(User, backref=DB.backref("reviews"))
+
+    def __init__(self, PageID, UserID, Rating, ReviewText):
+        self.PageID = PageID
+        self.UserID = UserID
+        self.Rating = Rating
+        self.ReviewText = ReviewText
+
+
+class Like(DB.Model):
+    id = DB.Column(DB.Integer, primary_key=True)
+
+    ReviewID = DB.Column(DB.Integer, DB.ForeignKey("review.ReviewID"))
+    UserID = DB.Column(DB.String(256), DB.ForeignKey("user.UserID"))
+
+    DB.relationship(Review, backref=DB.backref("likes"))
+    DB.relationship(User, backref=DB.backref("likes"))
+
+    def __init__(self, ReviewID, UserID):
+        self.ReviewID = ReviewID
+        self.UserID = UserID
+
+
+
