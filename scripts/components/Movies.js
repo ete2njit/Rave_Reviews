@@ -1,10 +1,21 @@
 import * as React from 'react';
+import Header from './Header'
+import Search from './Search'
 
 
 
-const Movies= () =>{
+const Movies= (props) =>{
+    const callbackFunction  = (data) =>{
+        console.log("calling back child data ")
+        console.log( data)
+      }
     return (
-        <h1> Movies page </h1>
+        <div>
+
+<Header/>
+       <Search parentCallback = {callbackFunction} />
+        </div>
+       
     );
 }
 export default Movies
