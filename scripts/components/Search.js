@@ -14,10 +14,7 @@ const Search = (props) =>{
         
       }
 
-    // React.useEffect(() => {
-    //     props.parentCallback("comming from child");
-    //     }, []);
-    
+   
     return (
     
     
