@@ -10,6 +10,7 @@ import Card from 'react-bootstrap/Card'
 import Socket from "../Socket";
 import Catalog from "./Catalog"
 import { Container } from 'react-bootstrap';
+import {CATAGORIES} from './Catagories'
 
 
 const Home = () => {
@@ -63,10 +64,10 @@ const Home = () => {
     </Col>
     <Col>
     <DropdownButton id="dropdown-basic-button" title={searchCategory}>
-      <Dropdown.Item   onClick={() => setSearchCategory("movie")}> Movies</Dropdown.Item>
-      <Dropdown.Item onClick={() => setSearchCategory("book")}>Books</Dropdown.Item>
-      <Dropdown.Item onClick={() => setSearchCategory("show")}>TVShows</Dropdown.Item>
-      <Dropdown.Item onClick={() => setSearchCategory("game")}>game</Dropdown.Item>
+      <Dropdown.Item   onClick={() => setSearchCategory(CATAGORIES["Movie"])}> Movies</Dropdown.Item>
+      <Dropdown.Item onClick={() => setSearchCategory(CATAGORIES["Book"])}>Books</Dropdown.Item>
+      <Dropdown.Item onClick={() => setSearchCategory(CATAGORIES["TVShow"])}>TVShows</Dropdown.Item>
+      <Dropdown.Item onClick={() => setSearchCategory(CATAGORIES["Game"])}>game</Dropdown.Item>
     </DropdownButton>
     </Col>
     <Col>

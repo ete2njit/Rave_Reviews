@@ -1,6 +1,7 @@
 import Form from 'react-bootstrap/Form'
 import * as React from 'react';
 import Col from 'react-bootstrap/Col'
+import {CATAGORIES} from './Catagories'
 
 
 const Search = (props) =>{
@@ -10,6 +11,7 @@ const Search = (props) =>{
             event.preventDefault()
             props.parentCallback(searchTerm)
             console.log("sending data")
+            
     
         }
         

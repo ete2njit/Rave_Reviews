@@ -7,11 +7,9 @@ import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Catalog from "./Catalog"
 import {CATAGORIES} from './Catagories'
-
-const Movies= () =>{
+const Books= () =>{
     const[searchTerm ,setSearchTerm] = React.useState("")
-  
-    const upcomingMovies = {title:["star wars","star wars", "star wars"] ,cover:["https://www.themoviedb.org/t/p/original/6FfCtAuVAW8XJjZ7eWeLibRLWTw.jpg","https://www.themoviedb.org/t/p/original/6FfCtAuVAW8XJjZ7eWeLibRLWTw.jpg","https://www.themoviedb.org/t/p/original/6FfCtAuVAW8XJjZ7eWeLibRLWTw.jpg"], ID:[1,2,3]}
+    const upcomingMovies = {title:["harry potter","harry potter", "harry potter"] ,cover:["https://m.media-amazon.com/images/I/51YuFod+3FL._SL500_.jpg","https://m.media-amazon.com/images/I/51YuFod+3FL._SL500_.jpg","https://m.media-amazon.com/images/I/51YuFod+3FL._SL500_.jpg"], ID:[1,2,3]}
     const [searchData , setSearchData] = React.useState({})
     const callbackFunction  = (data) =>{
       
@@ -24,7 +22,7 @@ const Movies= () =>{
       React.useEffect(() => {
           if (searchTerm.length >0){
             Socket.emit("search request", {
-                category: CATAGORIES["Movie"],
+                category: CATAGORIES["Book"],
                 searchTerm: searchTerm,
             }); 
             console.log("sending data to backedn")
@@ -74,4 +72,4 @@ const Movies= () =>{
        
     );
 }
-export default Movies
+export default Books

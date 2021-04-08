@@ -11,6 +11,7 @@ const Header= () =>{
         <Nav.Link href="#/Movies">Movies</Nav.Link>
         <Nav.Link href="#/TVShows">TV Shows</Nav.Link>
         <Nav.Link href="#/Books">Books</Nav.Link>
+        <Nav.Link href="#/Games">Games</Nav.Link>
       </Nav>
     </Navbar>
         
