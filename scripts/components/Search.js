@@ -7,6 +7,7 @@ const Search = (props) =>{
     const [searchTerm, setSearchTerm] = React.useState("");
     const handleKeyDown = (event) => {
         if (event.key === 'Enter' && searchTerm.length >0) {
+            event.preventDefault()
             props.parentCallback(searchTerm)
             console.log("sending data")
     
