@@ -2,7 +2,10 @@ import React from "react"
 import Home from "./components/Home"
 import Socket from "./Socket";
 import Movies from "./components/Movies"
+import Books from "./components/Books"
 import Error from "./components/Error"
+import Shows from "./components/Shows"
+import Game from "./components/Game"
 import {Switch , Route} from "react-router-dom"
 
 const App= () =>{
@@ -16,6 +19,18 @@ const App= () =>{
                <Route path="/movies">
                   <Movies/>
                 </Route>
+
+                <Route path="/books">
+                  <Books/>
+                </Route>
+
+                <Route path="/TVShows">
+                  <Shows/>
+                </Route>
+                <Route path="/Games">
+                  <Game/>
+                </Route>
+
 
                 <Route path="/">
                   <Home />

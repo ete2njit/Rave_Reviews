@@ -7,16 +7,14 @@ import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Catalog from "./Catalog"
 import {CATAGORIES} from './Catagories'
-
-const Movies= () =>{
+const Shows= () =>{
     const[searchTerm ,setSearchTerm] = React.useState("")
-  
-    const upcomingMovies = {title:["star wars","star wars", "star wars"] ,cover:["https://www.themoviedb.org/t/p/original/6FfCtAuVAW8XJjZ7eWeLibRLWTw.jpg","https://www.themoviedb.org/t/p/original/6FfCtAuVAW8XJjZ7eWeLibRLWTw.jpg","https://www.themoviedb.org/t/p/original/6FfCtAuVAW8XJjZ7eWeLibRLWTw.jpg"], ID:[1,2,3]}
+    const upcomingMovies = {title:["south park","south park", "south park"] ,cover:["https://upload.wikimedia.org/wikipedia/en/4/41/South_Park_main_characters.png","https://upload.wikimedia.org/wikipedia/en/4/41/South_Park_main_characters.png","https://upload.wikimedia.org/wikipedia/en/4/41/South_Park_main_characters.png"], ID:[1,2,3]}
     const [searchData , setSearchData] = React.useState({})
     const callbackFunction  = (data) =>{
       
         setSearchTerm(data)
-      console.log("reciving serch term from child") 
+   
       console.log(searchTerm)
         
       }
@@ -24,28 +22,21 @@ const Movies= () =>{
       React.useEffect(() => {
           if (searchTerm.length >0){
             Socket.emit("search request", {
-                category: CATAGORIES["Movie"],
+                category: CATAGORIES["TVShow"],
                 searchTerm: searchTerm,
             }); 
-            console.log("sending data to backedn")
+         
           }
        
         }, [searchTerm]);
 
-      React.useEffect(() => {
-        Socket.on("connected", (data) => {
-            console.log("connected")
-         
-            });
-        }, []);
+     
 
         React.useEffect(() => {
             Socket.on("search response", (data) => {
-                console.log("data recieved")
-                console.log(data)
-          
+              
                 setSearchData(data)
-                console.log(searchData)
+          
         
                 });
             }, []);
@@ -74,4 +65,4 @@ const Movies= () =>{
        
     );
 }
-export default Movies
+export default Shows
