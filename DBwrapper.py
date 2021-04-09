@@ -1,6 +1,44 @@
 import models
 
 
+def register(DB, newUser):
+    """
+    :param DB:      DB with user table
+    :param User:    dict(?) containing users info
+    :return:        true if new user created,
+                    false if userID already exists in DB
+    """
+    if not DB.session.query(models.User).filter_by(UserID=newUser["UserID"]).first():
+        DB.session.add(models.User(
+            newUser["UserID"],
+            newUser["Username"],
+            newUser["Usermail"],
+            newUser["Userpfp"],
+            newUser["hash"]
+        ))
+        return True
+    return False
+
+
+def login(DB, returningUser):
+    """
+    :param DB:                  DB with user table
+    :param returningUser:       dict(?) containing users is and hash
+    :return:                    dict containing status: OK and user info on success,
+                                dict containing status: FAILURE on failure
+    """
+    ret = DB.session.query(models.User).filter_by(UserID=returningUser["UserID"], hash=returningUser["hash"]).first()
+
+    try:
+        return {"status": "OK",
+                "UserID": ret["UserID"],
+                "Username": ret["Username"],
+                "Usermail": ret["Usermail"],
+                "Userpfp": ret["Userpfp"]}
+    except KeyError:
+        return {"status": "FAILURE"}
+
+
 def getReviews(DB, pageID):
     """
     :param DB:      DB with reviews table

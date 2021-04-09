@@ -5,7 +5,7 @@ from os.path import join, dirname
 from dotenv import load_dotenv
 
 from APIs import APIwrapper
-import DBwrapper
+
 
 import flask
 import flask_socketio
@@ -42,6 +42,9 @@ DB.app = APP
 
 DB.create_all()
 DB.session.commit()
+
+# avoid cyclical import, import DB related files here
+import DBwrapper
 
 
 @SOCKETIO.on('connect')

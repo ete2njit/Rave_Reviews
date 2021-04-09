@@ -35,12 +35,17 @@ class User(DB.Model):
     UserID = DB.Column(DB.String(256), primary_key=True)
 
     Username = DB.Column(DB.String(512), nullable=False)
+    Usermail = DB.Column(DB.String(512), nullable=False)
     Userpfp = DB.Column(DB.String(256), nullable=False)
 
-    def __init__(self, UserID, Username, Userpfp):
+    hash = DB.Column(DB.String(512), nullable=False)
+
+    def __init__(self, UserID, Username, Usermail, Userpfp, hash):
         self.UserID = UserID
         self.Username = Username
+        self.Usermail = Usermail
         self.Userpfp = Userpfp
+        self.hash = hash
 
 
 class Review(DB.Model):
