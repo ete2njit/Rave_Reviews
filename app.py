@@ -5,6 +5,7 @@ from os.path import join, dirname
 from dotenv import load_dotenv
 
 from APIs import APIwrapper
+import DBwrapper
 
 
 import flask
