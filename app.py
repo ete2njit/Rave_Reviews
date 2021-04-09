@@ -5,6 +5,7 @@ from os.path import join, dirname
 from dotenv import load_dotenv
 
 from APIs import APIwrapper
+import DBwrapper
 
 import flask
 import flask_socketio
@@ -18,6 +19,9 @@ CATEGORY_REQUEST_CHANNEL = "category request"
 CATEGORY_RESPONSE_CHANNEL = "category response"
 INFO_BY_ID_REQUEST_CHANNEL = "info by id request"
 INFO_BY_ID_RESPONSE_CHANNEL = "info by id response"
+GET_REVIEWS_REQUEST_CHANNEL = "get reviews request"
+GET_REVIEWS_RESPONSE_CHANNEL = "get reviews response"
+WRITE_REVIEW_CHANNEL = "write review"
 #
 
 
@@ -139,6 +143,23 @@ def on_id_request(data):
     )
 
 
+@SOCKETIO.on(GET_REVIEWS_REQUEST_CHANNEL)
+def get_review(data):
+    [userIDs, ratings, reviews] = DBwrapper.getReviews(DB, data["ID"])
+
+    SOCKETIO.emit(
+        GET_REVIEWS_RESPONSE_CHANNEL,
+        {
+            "userIDs": userIDs,
+            "ratings": ratings,
+            "reviews": reviews,
+        }, room=flask.request.sid
+    )
+
+
+@SOCKETIO.on(WRITE_REVIEW_CHANNEL)
+def write_review(data):
+    DBwrapper.writeReview(DB, data["ID"], data["userID"], data["rating"], data["review"])
 
 
 @APP.route('/')
