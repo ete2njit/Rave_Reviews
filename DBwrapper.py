@@ -6,18 +6,21 @@ def register(DB, newUser):
     :param DB:      DB with user table
     :param User:    dict(?) containing users info
     :return:        true if new user created,
-                    false if userID already exists in DB
+                    false if userID already exists in DB or dict did not contain all keys
     """
-    if not DB.session.query(models.User).filter_by(UserID=newUser["UserID"]).first():
-        DB.session.add(models.User(
-            newUser["UserID"],
-            newUser["Username"],
-            newUser["Usermail"],
-            newUser["Userpfp"],
-            newUser["hash"]
-        ))
-        return True
-    return False
+    try:
+        if not DB.session.query(models.User).filter_by(UserID=newUser["UserID"]).first():
+            DB.session.add(models.User(
+                newUser["UserID"],
+                newUser["Username"],
+                newUser["Usermail"],
+                newUser["Userpfp"],
+                newUser["hash"]
+            ))
+            return True
+        return False
+    except KeyError:
+        return False
 
 
 def login(DB, returningUser):
