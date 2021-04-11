@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Catalog from "./Catalog"
 import {CATAGORIES} from './Catagories'
+import Result from "./Result"
 const Books= () =>{
     const[searchTerm ,setSearchTerm] = React.useState("")
     const upcomingMovies = {title:["harry potter","harry potter", "harry potter"] ,cover:["https://m.media-amazon.com/images/I/51YuFod+3FL._SL500_.jpg","https://m.media-amazon.com/images/I/51YuFod+3FL._SL500_.jpg","https://m.media-amazon.com/images/I/51YuFod+3FL._SL500_.jpg"], ID:[1,2,3]}
@@ -18,6 +19,11 @@ const Books= () =>{
       console.log(searchTerm)
         
       }
+
+      // TODO implement call back
+      const handleResults = (data) =>{
+        
+    }
 
       React.useEffect(() => {
           if (searchTerm.length >0){
@@ -56,7 +62,7 @@ const Books= () =>{
                 <div>
                     <Header/>
                     <Search parentCallback = {callbackFunction}/>
-                    <Catalog data ={searchData}/>
+                    <Result  productCallBack={ handleResults} data = {searchData}/>
                 </div> )
             }
     return (

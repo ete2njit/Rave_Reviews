@@ -83,7 +83,7 @@ const Home = (props) => {
     </Col>
 </Form.Row>
     </Form> 
-    {/* <Catalog data ={searchData}/> */}
+
     <Result  productCallBack={ handleResults} data = {searchData}/>
     </div>)
  }
