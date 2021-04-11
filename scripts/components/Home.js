@@ -9,15 +9,23 @@ import Row from 'react-bootstrap/Row'
 import Card from 'react-bootstrap/Card'
 import Socket from "../Socket";
 import Catalog from "./Catalog"
+import Result from "./Result"
 import { Container } from 'react-bootstrap';
 import {CATAGORIES} from './Catagories'
+import { propTypes } from 'react-bootstrap/esm/Image';
 
 
-const Home = () => {
+const Home = (props) => {
   const [searchTerm, setSearchTerm] = React.useState("");
   const [searchCategory, setSearchCategory] = React.useState("Category");
   const [searchData , setSearchData] = React.useState({})
   const upcomingMovies = {title:["star wars","star wars", "star wars"] ,cover:["https://www.themoviedb.org/t/p/original/6FfCtAuVAW8XJjZ7eWeLibRLWTw.jpg","https://www.themoviedb.org/t/p/original/6FfCtAuVAW8XJjZ7eWeLibRLWTw.jpg","https://www.themoviedb.org/t/p/original/6FfCtAuVAW8XJjZ7eWeLibRLWTw.jpg"], ID:[1,2,3]}
+  
+   const handleResults = (data) =>{
+        console.log("recieved data from resutls - Home.js")
+        props.productCallBack(data)
+   }
+  
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
     
@@ -51,6 +59,7 @@ const Home = () => {
       Socket.on("search response", (data) => {
     
           setSearchData(data)
+          console.log(data)
   
           });
       }, []);
@@ -74,7 +83,8 @@ const Home = () => {
     </Col>
 </Form.Row>
     </Form> 
-    <Catalog data ={searchData}/>
+    {/* <Catalog data ={searchData}/> */}
+    <Result  productCallBack={ handleResults} data = {searchData}/>
     </div>)
  }
 
