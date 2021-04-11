@@ -10,8 +10,14 @@ import {Switch , Route} from "react-router-dom"
 
 const App= () =>{
 
-   
+  const [ProductData, setProductData ] = React.useState({})
 
+   
+   const parentProductCallBack = (data) =>{
+      setProductData(data);
+      console.log("reveived data App.js routing ")
+      console.log(data)
+   }
 
     return (
         <main>
@@ -33,7 +39,7 @@ const App= () =>{
 
 
                 <Route path="/">
-                  <Home />
+                  <Home  productCallBack={parentProductCallBack} />
                 </Route>
 
            </Switch>
