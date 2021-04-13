@@ -26,7 +26,7 @@ def register(DB, newUser):
 def login(DB, returningUser):
     """
     :param DB:                  DB with user table
-    :param returningUser:       dict(?) containing users is and hash
+    :param returningUser:       dict(?) containing users id and hash
     :return:                    dict containing status: OK and user info on success,
                                 dict containing status: FAILURE on failure
     """
@@ -35,6 +35,24 @@ def login(DB, returningUser):
     try:
         return {"status": "OK",
                 "UserID": ret["UserID"],
+                "Username": ret["Username"],
+                "Usermail": ret["Usermail"],
+                "Userpfp": ret["Userpfp"]}
+    except KeyError:
+        return {"status": "FAILURE"}
+
+
+def getProfile(DB, userID):
+    """
+    :param DB:              DB with user table
+    :param userID:          ID of user profile to look up
+    :return:                status: OK and user data if retrieve succeeded
+                            status: FAILURE otherwise
+    """
+    ret = DB.session.query(models.User).filter_by(UserID=userID).first()
+
+    try:
+        return {"status": "OK",
                 "Username": ret["Username"],
                 "Usermail": ret["Usermail"],
                 "Userpfp": ret["Userpfp"]}
