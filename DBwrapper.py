@@ -44,11 +44,11 @@ def login(DB, returningUser):
 def getProfile(DB, userID):
     """
     :param DB:              DB with user table
-    :param userID:          ID of user profile to look up
+    :param userID:          dict with key 'UserID' as ID of user profile to look up
     :return:                status: OK and user data if retrieve succeeded
                             status: FAILURE otherwise
     """
-    ret = DB.session.query(models.User).filter_by(UserID=userID).first()
+    ret = DB.session.query(models.User).filter_by(UserID=userID["UserID"]).first()
 
     try:
         return {"status": "OK",
