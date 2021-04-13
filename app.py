@@ -129,7 +129,6 @@ def on_id_request(data):
     dcat = data["category"]
     dID = data["ID"]
 
-
     ret = APIwrapper.get_info_by_ID(dcat, dID)
 
     SOCKETIO.emit(
