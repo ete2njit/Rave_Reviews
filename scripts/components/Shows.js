@@ -6,6 +6,7 @@ import Socket from "../Socket";
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Catalog from "./Catalog"
+import Result from "./Result"
 import {CATAGORIES} from './Catagories'
 const Shows= () =>{
     const[searchTerm ,setSearchTerm] = React.useState("")
@@ -18,6 +19,11 @@ const Shows= () =>{
       console.log(searchTerm)
         
       }
+
+        // TODO implement call back
+        const handleResults = (data) =>{
+        
+        }
 
       React.useEffect(() => {
           if (searchTerm.length >0){
@@ -49,7 +55,7 @@ const Shows= () =>{
                 <div>
                     <Header/>
                     <Search parentCallback = {callbackFunction}/>
-                    <Catalog data ={searchData}/>
+                    <Result  productCallBack={ handleResults} data = {searchData}/>
                 </div> )
             }
     return (

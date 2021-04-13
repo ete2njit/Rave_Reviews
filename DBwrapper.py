@@ -1,6 +1,5 @@
 import models
 
-
 def register(DB, newUser):
     """
     :param DB:      DB with user table
