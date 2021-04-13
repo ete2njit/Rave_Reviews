@@ -99,7 +99,7 @@ def on_category_request(data):
 
     print("processing search request: " + dcat + ", " + dterm)
 
-    [category, title, year, ID, cover] = APIwrapper.process_search_request(dcat, dterm, limit)
+    [category, title, year, ID, cover] = APIwrapper.process_category_request(dcat, dterm, limit)
 
     SOCKETIO.emit(
         CATEGORY_RESPONSE_CHANNEL,
