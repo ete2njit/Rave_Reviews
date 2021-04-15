@@ -23,6 +23,13 @@ INFO_BY_ID_RESPONSE_CHANNEL = "info by id response"
 GET_REVIEWS_REQUEST_CHANNEL = "get reviews request"
 GET_REVIEWS_RESPONSE_CHANNEL = "get reviews response"
 WRITE_REVIEW_CHANNEL = "write review"
+REGISTER_REQUEST_CHANNEL = "register request"
+REGISTER_RESPONSE_CHANNEL = "register response"
+LOGIN_REQUEST_CHANNEL = "login request"
+LOGIN_RESPONSE_CHANNEL = "login response"
+USER_LOOKUP_REQUEST_CHANNEL = "user lookup request"
+USER_LOOKUP_RESPONSE_CHANNEL = "user lookup response"
+
 #
 
 
@@ -122,7 +129,6 @@ def on_id_request(data):
     dcat = data["category"]
     dID = data["ID"]
 
-
     ret = APIwrapper.get_info_by_ID(dcat, dID)
 
     SOCKETIO.emit(
@@ -164,6 +170,56 @@ def get_review(data):
 @SOCKETIO.on(WRITE_REVIEW_CHANNEL)
 def write_review(data):
     DBwrapper.writeReview(DB, data["ID"], data["userID"], data["rating"], data["review"])
+
+
+@SOCKETIO.on(REGISTER_REQUEST_CHANNEL)
+def register_request(data):
+    """
+    :param data:    data dict with keys 'UserID', 'Username', 'Usermail', 'Userpfp' and 'hash'
+    :return:        dict with status: FAILURE on fail
+                    dict with status: OK on success
+    """
+    status = DBwrapper.register(DB, data)
+
+    if(status):
+        ret = {"status": "OK"}
+    else:
+        ret = {"status": "FAILURE"}
+    SOCKETIO.emit(
+        REGISTER_RESPONSE_CHANNEL,
+        ret,
+        room=flask.request.sid
+    )
+
+
+@SOCKETIO.on(LOGIN_REQUEST_CHANNEL)
+def login_request(data):
+    """
+    :param data:    data dict with keys 'UserID' and 'hash'
+    :return:        dict with status: OK and user info on success
+                    dict with status: FAILURE otherwise
+    """
+    ret = DBwrapper.login(DB, data)
+    SOCKETIO.emit(
+        LOGIN_RESPONSE_CHANNEL,
+        ret,
+        room=flask.request.sid
+    )
+
+
+@SOCKETIO.on(USER_LOOKUP_REQUEST_CHANNEL)
+def user_lookup(data):
+    """
+    :param data:    dict with key 'UserID'
+    :return:        dict with status: OK and user info on success
+                    dict with status: FAILURE otherwise
+    """
+    ret = DBwrapper.getProfile(DB, data)
+    SOCKETIO.emit(
+        USER_LOOKUP_RESPONSE_CHANNEL,
+        ret,
+        room=flask.request.sid
+    )
 
 
 @APP.route('/')
