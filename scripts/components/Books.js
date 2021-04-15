@@ -4,6 +4,7 @@ import Search from './Search'
 import Socket from "../Socket";
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
+
 import CatalogGrid from "./CatalogGrid"
 import CatalogSideScroll from "./CatalogSideScroll"
 import { CATAGORIES } from './Catagories'
@@ -96,6 +97,7 @@ const Books= () =>{
         }); 
         console.log("sending data to backedn")
         }
+      
        
     }, [searchTerm]);
 
@@ -120,8 +122,6 @@ const Books= () =>{
 
     if(Object.keys(searchData).length !=0){
         return (
-
-                
         <div>
             <Header />
             <div className="catalog-header">
@@ -133,6 +133,7 @@ const Books= () =>{
             </div>
         </div> )
     }
+
     return (
         <div>
             <Header />

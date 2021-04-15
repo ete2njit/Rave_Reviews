@@ -83,11 +83,10 @@ const Shows= () =>{
 
     React.useEffect(() => {
         if (searchTerm.length >0){
-        Socket.emit("search request", {
-            category: CATAGORIES["TVShow"],
-            searchTerm: searchTerm,
-        }); 
-         
+          Socket.emit("search request", {
+              category: CATAGORIES["TVShow"],
+              searchTerm: searchTerm,
+          }); 
         }
        
     }, [searchTerm]);

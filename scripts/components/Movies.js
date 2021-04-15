@@ -94,8 +94,6 @@ const Movies= () =>{
         });
     });
 
-    
-
       React.useEffect(() => {
           if (searchTerm.length >0){
             Socket.emit("search request", {

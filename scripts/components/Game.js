@@ -8,6 +8,7 @@ import CatalogGrid from "./CatalogGrid"
 import CatalogSideScroll from "./CatalogSideScroll"
 import Catalog from "./Catalog"
 import {CATAGORIES} from './Catagories'
+import Result from "./Result"
 const Shows= () =>{
     const [searchTerm, setSearchTerm] = React.useState("")
 
@@ -72,13 +73,11 @@ const Shows= () =>{
 
     React.useEffect(() => {
         if (searchTerm.length >0){
-        Socket.emit("search request", {
-            category: CATAGORIES["Game"],
-            searchTerm: searchTerm,
-        }); 
-         
+          Socket.emit("search request", {
+              category: CATAGORIES["Game"],
+              searchTerm: searchTerm,
+          }); 
         }
-       
     }, [searchTerm]);
 
      
@@ -108,6 +107,7 @@ const Shows= () =>{
                 </div>
             </div>)
     }
+          
     return (
         <div>
             <Header />
