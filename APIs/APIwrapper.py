@@ -84,7 +84,7 @@ def process_category_request(dcat, dtype, limit=10):
             else:
                 return None
             for g in ret:
-                category.append(g.category)
+                category.append(dtype)
                 title.append(g.title)
                 year.append(g.year)
                 ID.append(g.gameID)
@@ -104,7 +104,7 @@ def process_category_request(dcat, dtype, limit=10):
             else:
                 return None
             for mov in ret:
-                category.append(mov.category)
+                category.append(dtype)
                 title.append(mov.title)
                 year.append(mov.year)
                 ID.append(mov.tmdbID)
@@ -113,7 +113,7 @@ def process_category_request(dcat, dtype, limit=10):
         elif (dcat == "book"):
             ret = book.getBestSellers(dtype)
             for b in ret:
-                category.append(b.category)
+                category.append(dtype)
                 title.append(b.title)
                 year.append(b.publishYear)
                 ID.append(b.isbn)
@@ -131,7 +131,7 @@ def process_category_request(dcat, dtype, limit=10):
             else:
                 return None
             for s in ret:
-                category.append(s.category)
+                category.append(dtype)
                 title.append(s.title)
                 year.append(s.release_date[:4])
                 ID.append(s.tmdbID)

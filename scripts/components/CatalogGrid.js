@@ -8,13 +8,13 @@ const CatalogGrid = (props) =>{
     return (
        <div>
             <h1>{props.title} </h1>  
-            <ul className="product-list">
+            <div className="catalog-grid">
                 {props.data["ID"].map((id, index) =>
-                    <li className="catalog-item" key={id}>
+                    <div className="catalog-item" key={id}>
                       <Product  name = {props.data["title"][index]} img = {props.data["cover"][index]}/>
-                    </li>
+                    </div>
                 )}
-            </ul>
+            </div>
        </div>
     );
 }

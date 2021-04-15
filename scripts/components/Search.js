@@ -21,20 +21,12 @@ const Search = (props) =>{
     return (
     
     
-    <div>
-         <Form>
-      <Form.Row>
-      <Col md ={10}>
-      <Form.Control placeholder="Title" onKeyDown = {handleKeyDown} onChange = {(e) => setSearchTerm(e.target.value)}
-      />
-      </Col>
-      <Col>
-      </Col>
-      <Col>
-      </Col>
-  </Form.Row>
+    <div className="search-div">
+      <Form className="search-form">
+        <Form.Row>
+          <Form.Control className="search-bar" placeholder="Title" onKeyDown = {handleKeyDown} onChange = {(e) => setSearchTerm(e.target.value)}/>
+        </Form.Row>
       </Form>
-
     </div>
     
     );

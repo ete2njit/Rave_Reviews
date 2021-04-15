@@ -9,42 +9,23 @@ import Card from 'react-bootstrap/Card'
 
 const Product = (props) => {
     return (
-        <div>
+        <div className="product-div">
             <Container fluid >
                 <Row>
                     <Col>
-                       <Card style={{ width: '25rem' }}>
-                            <Card.Img variant="top" src={props.img} />
-                            <Card.Body>
-                                <Card.Title>Title </Card.Title>
-                                <Card.Text>
-                                    {props.name}
-                            </Card.Text>
-                            <Card.Text>
-                                   {props.creators}
-                                </Card.Text>
-                                <Card.Text>
-                                Description 
-                                {props.description}
-                                </Card.Text>
-                            
-                                <Card.Text>
-                                   Reviews
-                                    {props.reviews}
+                       <Card className="product-card card">
+                            <Card.Img className="product-card image" variant="top" src={props.img} />
+                            <Card.Body className="product-card body">
+                                <Card.Title className="product-card title">{props.name}</Card.Title>
+                                <Card.Text className="product-card rating">
+                                    [rating here]
                                 </Card.Text>
                             </Card.Body>
                         </Card>
                     </Col>
-
                 </Row>
-                <Row>
-                   
-                </Row>
-
             </Container>
-
         </div>
-
     );
 }
 export default Product
