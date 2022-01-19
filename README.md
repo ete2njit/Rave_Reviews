@@ -1,5 +1,3 @@
-<h1 align="center">Welcome to Rave Reviews 👋</h1>
-
 ## Documentation Links
 * Flask: [@Flask](https://flask.palletsprojects.com/en/1.1.x/api/)
 * Heroku: [@Heroku](https://devcenter.heroku.com/categories/reference)
@@ -10,7 +8,7 @@
 ## Install
 Step 1
 ```sh
-git clone https://github.com/RaveReviews/Rave-Reviews.git
+git clone https://github.com/ete2njit/Rave_Reviews
 ```
 Step 2
 ```sh
@@ -44,13 +42,3 @@ npm run watch
 
 ```
 ```sh
-
-```
-
-  
-## Show your support
-
-Give a ⭐️ if this project helped you!
-
-***
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
